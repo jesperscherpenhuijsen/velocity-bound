@@ -1,0 +1,294 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\Rbf}{\mathbb{R}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Ks}{\tilde K}
+\newcommand{\bs}{\tilde\beta}
+\newcommand{\Ms}{M_\odot}
+
+\title{A velocity bound for positive-energy warp shells}
+\author{Jesper Ewoud Scherpenhuijsen\\ \small Independent researcher\\ \small \href{mailto:jscherpe@gmail.com}{jscherpe@gmail.com}}
+\date{October 20, 2026 (v4)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Fuchs et al.\ (2024) exhibited a stationary metric built from a static matter shell and a shift vector confined to the shell wall that satisfies the null, weak, strong and dominant energy conditions at a shift amplitude of $0.02\,c$, and noted that a larger shift eventually violates them through the momentum flux it induces, leaving the limit to future work. We determine that limit. For any static shell and any radial shift profile $S(r)$ the Eulerian energy density and spatial stresses change only at second order in the shift amplitude $v$, while the momentum density is linear in $v$, so the null condition reads $\rho^0 + S^0(e,e) - 2v\,J\cdot e + O(v^2)$ with $J$ fixed by the momentum constraint. The threshold $v^* = \min(\rho^0 + S^0(e,e))/(2J\cdot e)$ is exact at first order. On a static spherically symmetric background $J$ has a closed form in $S(r)$ and the metric functions; in the weak-field limit $|J| = |S'' + S'/r|/16\pi$ on the equator, and the exact expression reproduces the three-dimensional threshold of every shell computed here to three digits from a one-dimensional radial formula. Since a monotone unit transition over a width $\Delta$ has $\max|S''| \ge 4/\Delta^2$, the threshold obeys $v^* \le 2\pi(\rho^0+p_t^0)_{\max}\Delta^2$ (times $(1-\Delta/2R_1)^{-1}$ in general), and for a uniform shell $v^* \le \tfrac{3}{4}C(1-R_1/R_2)(1+p_t/\rho)$ with $C = 2GM/R_2c^2$ the compactness. An independent numerical pipeline reproduces the published shell and finds its threshold at $v = 0.031\,c$ by bisection on the full energy conditions, against $0.0316\,c$ from the first-order formula and $0.052\,c$ from the bound. Across eight shells the measured thresholds scale as $(\rho+p_t)_{\max}\Delta^2$, lie $0$ to $11\%$ below the first-order values, and stay below the bound by a factor $1.4$ to $3.5$. The admissible shift amplitude of a positive-energy warp shell of this type is of order its compactness times its relative wall thickness; the eight shells computed here reach between $1\%$ and $6\%$ of $c$.
+\end{abstract}
+
+\section{Introduction}
+
+Warp drive spacetimes transport observers along geodesics between two points of an asymptotically flat background by modifying the metric in a bounded region that moves with them \cite{Alcubierre1994,Natario2002}. Every member of the Nat\'ario class, the metrics with unit lapse and flat spatial slices that contain the Alcubierre, Nat\'ario, Lentz \cite{Lentz2021} and Fell--Heisenberg \cite{FellHeisenberg2021} solutions, violates the null energy condition \cite{SSV2022}. Bobrick and Martire \cite{BobrickMartire2021} argued that a physical warp drive must therefore carry a non-unit lapse or a curved spatial metric, positive ADM mass, and a subluminal velocity, and Fuchs et al.\ \cite{Fuchs2024} exhibited an explicit example: a static, spherically symmetric matter shell of $4.49\times10^{27}\,\mathrm{kg}$ between radii of $10\,\mathrm{m}$ and $20\,\mathrm{m}$, with a shift vector added inside the shell wall, satisfying the null, weak, strong and dominant energy conditions at a shift amplitude of $0.02\,c$.
+
+The same paper states the limitation that this work quantifies. The shift was kept below the level at which the momentum flux it induces causes violations, and the authors note that an upper limit on the shift exists before momentum flux exceeds energy density, leaving its value to future work \cite{Fuchs2024}. We ask how large the shift amplitude of such a shell can be while every pointwise energy condition holds, and what sets the limit.
+
+\paragraph{Related work.} The shell class has drawn independent scrutiny in 2026. Le \cite{Le2026cert} built an all-observer, Hawking--Ellis certifier and confirmed that the published shell is Type I with a positive null margin at its published shift amplitude. In a companion study \cite{Le2026shells} he constructed source-first shells, including a T-shell whose shift is obtained from the momentum constraint for a prescribed momentum density, and found that every configuration in a 600-point scan of compactness and thickness violates the dominant condition at the smooth source--vacuum transition, independently of the shift. In a third paper \cite{Le2026steer} he derived an acceleration--compactness ceiling $a_{\max}R < \tfrac12(1-x)$, $x = 2m/R$, for a radiating thin shell, a Buchdahl-type bound on kinematics; the bound derived here is its constant-velocity counterpart for a finite-thickness, non-radiating shell, and the two bound different quantities. Hollow static cores with a smooth onset have been analysed in \cite{HollowCores2026}. None of these works, to our knowledge, determines the shift amplitude at which a positive-energy shell first violates the null condition, gives the threshold in closed form, or bounds it in terms of compactness and wall thickness.
+
+We take the shell-plus-shift metric as a given stationary Lorentzian metric and compute its Einstein tensor, as its proposers do. The physical interpretation of the shift amplitude as a transport velocity, and the status of the construction as a solution of the Einstein equations with a specified matter model, have been criticised \cite{Barzegar2026}; the results below concern the metric itself and hold whatever that interpretation is. The contribution is fourfold.
+\begin{enumerate}
+\item For any static shell and any radial shift profile, the Eulerian energy density and spatial stresses change only at second order in the shift amplitude $v$, while the momentum density is linear in $v$ (Section~\ref{sec:first}). The null condition along $k = n + e$ therefore reads $\rho^0 + S^0(e,e) - 2v\,J\cdot e + O(v^2)$, and the threshold $v^* = \min(\rho^0 + S^0(e,e))/(2J\cdot e)$ is exact at first order.
+\item The linearized momentum density has a closed form on any static spherically symmetric background, equation~\eqref{eq:Jexact}; in the weak-field limit $|J| = |S''+S'/r|/16\pi$ on the equator (Section~\ref{sec:weak}). The exact form turns the threshold into a one-dimensional radial computation that reproduces the three-dimensional results to three digits.
+\item A monotone unit transition over a width $\Delta$ has $\max|S''| \ge 4/\Delta^2$, which gives $v^* \le 2\pi(\rho^0+p_t^0)_{\max}\Delta^2$ up to a factor $(1-\Delta/2R_1)^{-1}$, and for a uniform shell $v^* \le \tfrac34 C(1-R_1/R_2)(1+p_t/\rho)$ (Section~\ref{sec:weak}).
+\item An independent numerical pipeline reproduces the published shell and measures its threshold at $0.031\,c$ by bisection on the full nonlinear energy conditions; the first-order formula gives $0.0316\,c$, the weak-field equatorial formula $0.036\,c$, the bound $0.052\,c$. A scan over compactness, radius ratio and shift smoothing confirms the $(\rho+p_t)\Delta^2$ scaling (Section~\ref{sec:num}).
+\end{enumerate}
+
+The practical content is a scaling law: the shift amplitude of a positive-energy warp shell is bounded by its compactness times its relative wall thickness. At the bound, a shell whose wall is half its radius needs $C \approx 0.3$ to reach $0.1\,c$ and $C \ge 2/3$ to reach $0.5\,c$; even the most favourable case allowed by \eqref{eq:uniform}, a nearly solid sphere with $p_t = \rho$, needs $C \ge 1/3$ for $0.5\,c$.
+
+\section{Setup}\label{sec:setup}
+
+Units are $G = c = 1$ unless SI values are written out; energy densities convert to SI by $c^4/G$. The signature is $(-,+,+,+)$. The metric is written in $3+1$ form in the frame comoving with the shell, where it is stationary,
+\begin{equation}
+\dd s^2 = -\alpha^2\,\dd t^2 + \gamma_{ij}\,(\dd x^i + \beta^i\dd t)(\dd x^j + \beta^j\dd t), \qquad g_{ti} = \beta_i = \gamma_{ij}\beta^j .
+\label{eq:adm}
+\end{equation}
+
+\paragraph{The shell.} A static, spherically symmetric matter distribution with line element $-e^{2a(r)}\dd t^2 + e^{2b(r)}\dd r^2 + r^2\dd\Omega^2$. In Cartesian-type coordinates with $n_i = x_i/r$,
+\begin{equation}
+\alpha^0 = e^{a(r)}, \qquad \gamma_{ij} = \delta_{ij} + \left(e^{2b(r)}-1\right)n_i n_j, \qquad \beta^0_i = 0 .
+\end{equation}
+The shell has a vacuum interior for $r < R_1$, matter for $R_1 < r < R_2$, and the Schwarzschild exterior with mass $M$ and compactness $C = 2M/R_2$ for $r > R_2$. Its Eulerian stress-energy is diagonal: energy density $\rho^0(r)$, radial pressure $p_r^0(r)$ and tangential pressure $p_t^0(r)$. Nothing below depends on how $a$ and $b$ are generated. Fuchs et al.\ build them from smoothed constant-density and Tolman--Oppenheimer--Volkoff profiles \cite{Fuchs2024}; that construction is reproduced for the numerical part, and its deficiencies as a matter model \cite{Barzegar2026} do not affect the analysis, which uses only the metric.
+
+\paragraph{The warp term.} Following equation (26) of \cite{Fuchs2024}, a shift along the direction of motion $x$ is added to the covariant time-space component and nothing else,
+\begin{equation}
+\beta_i = -v\,S(r)\,\delta_i^{\,x}, \qquad S(r) = 1 \ (r < R_1 + R_b), \quad S(r) = 0 \ (r > R_2 - R_b), \quad S \text{ monotone between,}
+\label{eq:shift}
+\end{equation}
+with $g_{tt}$ left at $-e^{2a}$. The lapse becomes $\alpha^2 = e^{2a} + v^2 S^2\gamma^{xx}$, which differs from $\alpha^0$ only at second order in $v$; the spatial metric does not change. Inside $R_1 + R_b$ the shift is constant, so the interior stays flat; between $R_1 + R_b$ and $R_2 - R_b$ the shift changes, and that is where the energy conditions are tested. The analysis holds for any monotone $S(r)$ and any static shell. The specific compact sigmoid and moving-average smoothing of \cite{Fuchs2024} enter only through the numbers of Section~\ref{sec:num}. Adjusting $g_{tt}$ so as to keep the lapse at $\alpha^0$ would change the metric at $O(v^2)$ only and leave the first-order results untouched.
+
+\paragraph{Eulerian frame and energy conditions.} The Eulerian observer $n^\mu = (1/\alpha, -\beta^i/\alpha)$ and an orthonormal spatial triad $e_{(i)}$ built from $\gamma_{ij}$ give the frame components
+\begin{equation}
+\rho_E = T_{\mu\nu}n^\mu n^\nu, \qquad j_i = -T_{\mu\nu}\,n^\mu e_{(i)}^\nu, \qquad S_{ij} = T_{\mu\nu}\,e_{(i)}^\mu e_{(j)}^\nu ,
+\end{equation}
+the energy density, momentum density and spatial stress. Every null vector at a point is proportional to $k = n + e$ for a unit spatial $e$, so the null energy condition is
+\begin{equation}
+T_{\mu\nu}k^\mu k^\nu = \rho_E - 2\,j_i e^i + S_{ij}e^i e^j \;\ge\; 0 \quad \text{for all unit } e .
+\label{eq:nec}
+\end{equation}
+The weak condition adds $\rho_E \ge 0$ and the same inequality for all timelike unit vectors; the dominant condition requires in addition that the energy flux be causal, $|j| \le \rho_E$; the strong condition replaces $T$ by $T - \tfrac12 T g$ in the weak inequality.
+
+\section{First-order expansion and the exact threshold}\label{sec:first}
+
+The metric depends on $v$ only through $\beta_i = -vS\delta_i^x$ and through $\alpha^2 = e^{2a} + v^2S^2\gamma^{xx}$. The $3+1$ constraint and evolution equations of a stationary metric \cite{Baumgarte} sort the Eulerian stress-energy by its order in $v$.
+
+\paragraph{Energy density.} The Hamiltonian constraint
+\begin{equation}
+16\pi\rho_E = {}^{(3)}\!R + K^2 - K_{ij}K^{ij}
+\end{equation}
+contains the scalar curvature of $\gamma_{ij}$, which does not depend on $v$, and the extrinsic curvature $K_{ij} = (D_i\beta_j + D_j\beta_i)/2\alpha$, which is $O(v)$. Hence $\rho_E = \rho^0 + O(v^2)$.
+
+\paragraph{Momentum density.} The momentum constraint
+\begin{equation}
+8\pi j_i = D_j\!\left(K^j{}_i - \delta^j_i K\right)
+\label{eq:mom}
+\end{equation}
+is linear in $K_{ij}$, and $K_{ij} = v\Ks_{ij}\,[1 + O(v^2)]$ with
+\begin{equation}
+\Ks_{ij} = \frac{D_i\bs_j + D_j\bs_i}{2\alpha^0}, \qquad \bs_i = -S(r)\,\delta_i^{\,x} .
+\end{equation}
+Therefore $j_i = v J_i + O(v^3)$ with $8\pi J_i = D_j(\Ks^j{}_i - \delta^j_i\Ks)$. The covariant derivative $D$ is that of the shell's spatial metric and does not depend on $v$.
+
+\paragraph{Spatial stress.} For a stationary metric the evolution equation of $K_{ij}$ reads
+\begin{equation}
+0 = -D_iD_j\alpha + \alpha\left({}^{(3)}\!R_{ij} + KK_{ij} - 2K_{ik}K^k{}_j\right) + \mathcal{L}_\beta K_{ij} - 8\pi\alpha\left(S_{ij} - \tfrac12\gamma_{ij}(S-\rho_E)\right).
+\end{equation}
+Every term containing $K$ or $\mathcal{L}_\beta$ is $O(v^2)$, $\alpha$ and $D_iD_j\alpha$ equal their static values up to $O(v^2)$, and ${}^{(3)}\!R_{ij}$ is $v$-independent. Hence $S_{ij} = S^0_{ij} + O(v^2)$.
+
+\paragraph{The expansion.} Inserting into \eqref{eq:nec} gives, for every unit spatial $e$ at every point $x$,
+\begin{equation}
+T_{\mu\nu}k^\mu k^\nu = \rho^0(x) + S^0_{ij}(x)e^ie^j - 2v\,J_i(x)e^i + O(v^2).
+\label{eq:expansion}
+\end{equation}
+The zeroth-order part is non-negative wherever the static shell obeys the null condition; the first-order part is negative for directions with $J\cdot e > 0$ and unbounded below in $v$. Define at each point
+\begin{equation}
+v_1(x) = \min_{e:\ J\cdot e>0}\ \frac{\rho^0(x) + S^0_{ij}(x)e^ie^j}{2\,J_i(x)e^i}, \qquad v^* = \min_{x\in\text{shell}} v_1(x).
+\label{eq:vstar}
+\end{equation}
+
+\begin{theorem}[First-order threshold]\label{thm:first}
+Assume the static shell satisfies the null energy condition, strictly ($\rho^0 + S^0_{ij}e^ie^j > 0$ for all unit $e$) at every point where $J \neq 0$. To first order in the shift amplitude, the shell-plus-shift metric satisfies the null energy condition everywhere if and only if $v \le v^*$. The first violation appears at the minimizing point $x^*$ in the minimizing direction $e^*$, and the violated quantity grows as $2(v - v^*)\,J\cdot e^*$ for $v$ slightly above $v^*$. Without the strictness assumption, $v^* = 0$ whenever $J\cdot e > 0$ at a point where the static null energy along $e$ vanishes.
+\end{theorem}
+
+\begin{remark}
+(i) The second-order corrections are of relative size $v$, so for $v^*$ of a few percent the first-order threshold is accurate to a few percent; Section~\ref{sec:num} finds $0$ to $11\%$ (relative to the midpoint of the bisection interval), growing with $v^*$.
+(ii) The flux inequality of the dominant condition, $|j| \le \rho_E$, fails at $v_{\rm DEC} = \min\rho^0/|J| + O(v^2)$. Where the static shell obeys the dominant condition, $\rho^0 \ge S^0(e,e)$, so $v_{\rm DEC} \ge v^*$: the null condition is the binding one, and the weak and strong conditions, which contain it, fail with it.
+(iii) The minimizing direction is close to $\hat J$; replacing the minimum over $e$ by $e = \hat J$ changes $v^*$ by under $0.1\%$ in every case below, because the shell's stress is nearly isotropic in the plane transverse to the radial direction.
+(iv) Nothing in the argument uses spherical symmetry of the shift. It uses that the shift enters $g_{ti}$ linearly, that $\gamma_{ij}$ is unchanged, and that the background is stationary.
+\end{remark}
+
+\section{Weak-field closed form and the compactness-thickness bound}\label{sec:weak}
+
+In the limit of small compactness the shell's spatial metric is flat and its lapse unity, so $\Ks_{ij} = \tfrac12(\partial_i\bs_j + \partial_j\bs_i)$ with $\bs = (-S(r),0,0)$. With a prime for $\dd/\dd r$,
+\begin{equation}
+\Ks_{xx} = -S'n_x, \qquad \Ks_{xy} = -\tfrac12 S'n_y, \qquad \Ks_{xz} = -\tfrac12 S'n_z, \qquad \Ks = -S'n_x ,
+\end{equation}
+and the other components vanish. Inserting into $8\pi J_i = \partial_j\Ks_{ji} - \partial_i\Ks$ and using $\partial_i n_j = (\delta_{ij} - n_in_j)/r$ gives, with $\theta$ the angle from the direction of motion ($\cos\theta = n_x$),
+\begin{align}
+8\pi J_x &= -\tfrac12\left[S''\sin^2\theta + \frac{S'}{r}\left(1+\cos^2\theta\right)\right], \notag\\
+8\pi J_y &= \tfrac12\,n_xn_y\left(S'' - \frac{S'}{r}\right), \qquad
+8\pi J_z = \tfrac12\,n_xn_z\left(S'' - \frac{S'}{r}\right).
+\label{eq:Jweak}
+\end{align}
+On the axis ($\theta = 0$) the momentum density is radial with $8\pi|J| = |S'|/r$ and the first-order threshold involves the radial pressure, $v_1 = 4\pi r(\rho^0 + p_r^0)/|S'|$. On the equator ($\theta = \pi/2$) it points along the direction of motion, which is tangential to the shell there, with
+\begin{equation}
+|J| = \frac{|S'' + S'/r|}{16\pi}, \qquad
+v_1^{\rm eq}(r) = \frac{8\pi\left(\rho^0(r) + p_t^0(r)\right)}{|S''(r) + S'(r)/r|}.
+\label{eq:veq}
+\end{equation}
+For a transition of width $\Delta$ small compared with the radius, $S''$ is of order $1/\Delta^2$ while $S'/r$ is of order $1/\Delta r$, so the equatorial threshold is the smaller one and is governed by the second derivative of the shift profile against the local energy density plus tangential pressure. Section~\ref{sec:num} confirms that the minimizing point lies on the equator at the inner edge of the transition, where $|S''|$ is largest and the smoothed density has not reached its plateau.
+
+\begin{lemma}[Second derivative of a unit transition]\label{lem:S}
+Let $S$ be $C^1$ on $[r_a, r_b]$ with $S'$ absolutely continuous, $S(r_a) = 1$, $S(r_b) = 0$, $S'(r_a) = S'(r_b) = 0$, and let $\Delta = r_b - r_a$ and $m = \operatorname{ess\,sup}|S''|$. Then $|S'(r)| \le m\min(r-r_a,\, r_b-r)$, hence $1 = \left|\int S'\right| \le \int|S'| \le m\Delta^2/4$ and $m \ge 4/\Delta^2$, with equality for the piecewise-quadratic profile whose $S'$ is triangular. The same estimate gives $|S'| \le m\Delta/2$.
+\end{lemma}
+In the numerical part $\Delta$ is taken as the $1\%$ to $99\%$ width of $S$; on that interval the lemma gives $m \ge 3.92/\Delta^2$ up to the small end slopes, a change of $2\%$ that does not affect any conclusion.
+
+\begin{proposition}[Bound]\label{prop:bound}
+In the weak-field limit, with $r_m$ a point where $|S''| = m$ and $r_a \ge R_1$,
+\begin{equation}
+v^* \;\le\; v_1^{\rm eq}(r_m) \;\le\; \frac{8\pi(\rho^0 + p_t^0)_{\max}}{m\,(1 - \Delta/2R_1)} \;\le\; \frac{2\pi(\rho^0 + p_t^0)_{\max}\,\Delta^2}{1 - \Delta/2R_1}.
+\label{eq:bound}
+\end{equation}
+\end{proposition}
+\begin{proof}
+$v^*$ is a minimum over the shell, so $v^* \le v_1^{\rm eq}(r_m)$. The denominator in \eqref{eq:veq} is at least $m - |S'(r_m)|/r_m \ge m - m\Delta/2R_1$ by Lemma~\ref{lem:S}, and $(\rho^0+p_t^0)(r_m) \le (\rho^0+p_t^0)_{\max}$. The last step uses $m \ge 4/\Delta^2$.
+\end{proof}
+
+The factor $(1-\Delta/2R_1)^{-1}$ is needed only when $S'$ and $S''$ have opposite signs at $r_m$. In every case computed below the minimum of $v_1$ sits at the inner edge of the transition, where both are negative and the factor is absent; the simple form $v^* \le 2\pi(\rho^0+p_t^0)_{\max}\Delta^2$ held in all eight runs with the ratio of the two sides between $1.4$ and $3.1$.
+
+\begin{corollary}[Uniform shell]
+For a shell of uniform density between $R_1$ and $R_2$ one has $\rho^0 = 3M/4\pi(R_2^3 - R_1^3)$ and $\Delta \le R_2 - R_1$. Since $R_2^3 - R_1^3 \ge (R_2 - R_1)R_2^2$, the simple form of the bound becomes
+\begin{equation}
+v^* \;\le\; \frac34\, C\left(1 - \frac{R_1}{R_2}\right)\left(1 + \frac{p_t}{\rho}\right), \qquad C = \frac{2GM}{R_2c^2}.
+\label{eq:uniform}
+\end{equation}
+\end{corollary}
+
+The dominant condition of the static shell requires $p_t \le \rho$, and for the Fuchs et al.\ construction it fails before $C$ reaches $0.7$ (Section~\ref{sec:num}). Positive-energy shells of this type are therefore confined to $v \lesssim \tfrac32 C(1 - R_1/R_2)$ at the very most, and to a few tenths of that in practice, because the density is not at its maximum where the transition is steepest and $p_t/\rho$ is well below one for shells that satisfy the dominant condition with margin. Reaching $0.1\,c$ with a wall half the radius needs $C$ of order $0.3$ at the bound; $0.5\,c$ with the same wall needs $C$ above $2/3$, where the shell is near the dominant-condition limit and the weak-field expressions have corrections of order $C$.
+
+\paragraph{Exact first-order momentum density.} The weak-field assumption can be dropped. Taking the direction of motion as the polar axis, the shift one-form is $\bs = -S(r)\,\dd x = -S\cos\theta\,\dd r + Sr\sin\theta\,\dd\theta$, and the covariant derivatives of the static metric $\gamma = e^{2b}\dd r^2 + r^2\dd\Omega^2$ with lapse $e^{a}$ give, in the orthonormal frame $(\hat r, \hat\theta, \hat\phi)$,
+\begin{align}
+8\pi J_{\hat r} &= \frac{\cos\theta}{r}\, e^{-a-3b}\left[2S\left(e^{2b}-1\right)a' - 2S\,b' - e^{2b}S'\right], \notag\\
+16\pi J_{\hat\theta} &= \frac{\sin\theta}{r^2}\, e^{-a-2b}\left[r^2 S'' + r S' - r^2 S'(a'+b') + 2S\left(r b' + e^{2b} - 1\right)\right], \qquad J_{\hat\phi} = 0 .
+\label{eq:Jexact}
+\end{align}
+Setting $a = b = 0$ recovers \eqref{eq:Jweak} exactly (checked symbolically). On the equator $J_{\hat r} = 0$ and $J_{\hat\theta}$ is the whole momentum density, so the exact first-order equatorial threshold is
+\begin{gather}
+v_1^{\rm eq}(r) = \frac{\rho^0(r) + p_t^0(r)}{2\,|J_{\hat\theta}(r,\pi/2)|}, \notag\\
+8\pi\rho^0 = \frac{1}{r^2}\frac{\dd}{\dd r}\!\left[r\left(1-e^{-2b}\right)\right], \qquad
+8\pi p_t^0 = e^{-2b}\left[a'' + a'^2 - a'b' + \frac{a'-b'}{r}\right],
+\label{eq:veq_exact}
+\end{gather}
+a one-dimensional formula in the radial profiles alone. Evaluated on the published profiles it gives $v^* = 0.0316$ at $r = 12.3\,\mathrm{m}$, and across the eight shells of Section~\ref{sec:num} it reproduces the three-dimensional first-order thresholds to three digits ($0.0098$, $0.0456$, $0.0600$, $0.0528$, $0.0170$, $0.0273$, $0.0404$ against $0.0098$, $0.0456$, $0.0601$, $0.0529$, $0.0170$, $0.0273$, $0.0404$). The axial threshold $4\pi r(\rho^0 + p_r^0)/|S'|$, corrected in the same way, is three times larger in every case, so the equator decides.
+
+The ratio of the exact to the weak-field $|J|$ at the minimizing point is the curvature factor by which the weak-field threshold must be divided: $1.03$ at $C = 0.1$, $1.15$ at $C = 1/3$, $1.30$ at $C = 0.5$ and $1.71$ at $C = 0.7$. Averaged over the wall the factor is smaller ($1.01$, $1.07$, $1.16$, $1.41$), which is why Section~\ref{sec:num} reports those values for the three-dimensional runs. The prefactor $e^{-a-2b}$ alone is below one in the wall; the growth comes from the terms in $S(e^{2b}-1)$ and $S'(a'+b')$, which add to the momentum density sourced by $S''$. Since the factor exceeds one at every compactness tried, the weak-field bound \eqref{eq:bound} remains an upper bound on the exact first-order threshold for these shells.
+
+\paragraph{Physical reading.} A shift that varies across the wall is a translational frame-dragging field, and in general relativity such a field is sourced by momentum density. Equation~\eqref{eq:mom} says how much: $v|J| \sim v/16\pi\Delta^2$. The null condition caps the momentum density that a given energy density can carry at $(\rho+p_t)/2$ along the flux direction, and the dominant condition at $\rho$. The threshold is the shift at which the wall would have to carry momentum comparable to its own energy density. Fuchs et al.\ describe the resulting flow as a circulation pattern in the wall \cite{Fuchs2024}; the bound says how strong that circulation may be.
+
+\section{Numerical results}\label{sec:num}
+
+\paragraph{Method.} Warp Factory \cite{Helmerich2024} is MATLAB; its repository ships the generator of the Fuchs et al.\ shell with the exact smoothing and TOV steps of \cite{Fuchs2024}. We re-implemented the pipeline in Python with the generator ported line by line, so that the metric evaluated here is the published one. Each metric is built on a slab of five planes around $z = 0$ in the comoving frame with spacing $h = 0.2\,\mathrm{m}$ (the spacing of the published example), the metric derivatives are 4th-order central differences, the Einstein tensor is formed from them, $T_{\mu\nu} = (c^4/8\pi G)G_{\mu\nu}$, and the frame components are taken in the Eulerian tetrad. The null condition is sampled on 400 Fibonacci-distributed directions, the weak and strong conditions on 10 rapidities up to $2.0$ in addition, and the dominant condition through the causality of $-T^a{}_b k^b$; a Hawking--Ellis eigenvalue test is run beside the sampling. Minima are taken over the matter region, defined by $|T| > 10^{-4}\max|T|$. Lowering this threshold to $10^{-6}$ leaves the first-order thresholds of the published shell and of the $C = 0.7$ shell unchanged to four digits and moves their bisection intervals by less than $1\%$ ($[0.0303, 0.0306]$ and $[0.0534, 0.0538]$), so the matter mask does not hide violations at the edges of the wall. Validation of the pipeline is in Appendix~\ref{app:num}: the Einstein tensor matches an exact symbolic result for the Alcubierre metric to $1.5\%$ and the Eulerian energy density of that metric to $7\times10^{-6}$; the static shell reproduces the energy-condition behaviour of \cite{Fuchs2024} including its $10^{34}\,\mathrm{J\,m^{-3}}$ numerical floor.
+
+For each shell three quantities are measured. (a) The first-order threshold $v^*$ of \eqref{eq:vstar}, with $J = j/v$ read off at $v = 10^{-3}$ (changing to $v = 2\times10^{-3}$ alters $J$ by under $10^{-5}$, and $\rho_E$ changes by $O(v^2)$ as predicted) and the minimum over 2000 directions. (b) The weak-field equatorial threshold \eqref{eq:veq} from the radial profile $S(r)$ and the static $\rho^0$, $p_t^0$ along the equator. (c) The true threshold $v_{\rm NEC}$ by bisection on the full nonlinear null condition, eight halvings of the interval, violation meaning a sampled minimum below the static shell's own floor by $10^{-4}\max|T|$. The bound \eqref{eq:bound} is evaluated with $\Delta$ the $1\%$ to $99\%$ width of $S$ and with $(\rho^0+p_t^0)_{\max}$ over the matter region.
+
+\paragraph{The published shell.} For $R_1 = 10\,\mathrm{m}$, $R_2 = 20\,\mathrm{m}$, $M = 4.49\times10^{27}\,\mathrm{kg}$ ($C = 1/3$) and the published smoothing span, the static shell satisfies all four conditions to within $10^{-6}$ of $\max|T| = 1.36\times10^{40}\,\mathrm{J\,m^{-3}}$ and its stress tensor is of Hawking--Ellis type I everywhere. At $v = 0.02\,c$ nothing changes at that level, in agreement with \cite{Fuchs2024} and with the independent all-observer check of \cite{Le2026cert}.\footnote{The light-delay comparison of Table~1 in \cite{Fuchs2024} is captioned as computed at $v_{\rm warp} = 0.04\,c$ and lists the Warp Shell among the models. If that row was evaluated at $0.04\,c$, the configuration lies above the threshold found here; the energy-condition analysis of \cite{Fuchs2024} itself is at $0.02\,c$.} The transition width is $\Delta = 7.88\,\mathrm{m}$ and $\max|S''| = 0.0672\,\mathrm{m^{-2}}$, which is $4.3\%$ above the lower bound $4/\Delta^2$: the smoothed compact sigmoid is nearly the optimal profile of Lemma~\ref{lem:S}. The first-order threshold is $v^* = 0.0316\,c$, attained on the equator at $r = 12.4\,\mathrm{m}$, $2.4\,\mathrm{m}$ into the wall, where $S''$ is most negative. Bisection on the full conditions gives $v_{\rm NEC} \in [0.0305, 0.0316]\,c$. The weak-field equatorial formula gives $0.0361\,c$; the ratio of exact to weak-field $|J|$ is $1.15$ at the minimizing point and $1.07$ averaged over the wall, and the former accounts for the difference. The bound \eqref{eq:bound} without the $(1-\Delta/2R_1)^{-1}$ factor is $0.0522\,c$ and the uniform-shell form \eqref{eq:uniform} is $0.149\,c$.
+
+Above threshold the violation grows quickly. At $v = 0.2\,c$ the null condition fails over $31\%$ of the matter region, the worst point being the same equatorial inner-wall location with frame tensor $T_{00} = 1.13\times10^{40}$, $T_{01} = -4.03\times10^{40}$, $T_{11} = -1.76\times10^{40}$, $T_{33} = -1.43\times10^{40}\,\mathrm{J\,m^{-3}}$ and eigenvalues $(-1.44\pm4.02i)\times10^{40}$, $-0.04\times10^{40}$, $-1.43\times10^{40}$: Hawking--Ellis type IV, with no rest frame. Halving the grid spacing to $0.1\,\mathrm{m}$ leaves these numbers unchanged to three digits.
+
+\paragraph{The scan.} Table~\ref{tab:scan} varies the compactness at fixed radii, the radius ratio at fixed compactness, and the smoothing span, which sets $\Delta$. Three features stand out.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\caption{Thresholds for eight shells. $C = 2GM/R_2c^2$; sF is the Warp Factory smoothing span in samples of the radial grid, whose spacing is $0.51\,\mathrm{mm}$ here (sF $= 2000$, $4000$, $8000$ correspond to $1.0$, $2.0$ and $4.1\,\mathrm{m}$; the span in metres, not in samples, is what is reproducible); $\Delta$ is the $1\%$ to $99\%$ width of $S$; $v^*$ the first-order threshold, $v_{\rm wf}$ the weak-field equatorial threshold, $v_B$ the bound $2\pi(\rho+p_t)_{\max}\Delta^2$, $v_U$ the uniform-shell bound, $v_{\rm NEC}$ the bisection interval. All velocities in units of $c$. The static shell satisfies the dominant condition in every row except $C = 0.70$, where $p_t$ reaches $\rho$ and the dominant margin is $-0.46\max|T|$. For $R_1/R_2 = 0.25$ the static shell carries a $1.5\times10^{-4}$ relative null violation near the origin from the smoothing of the density into $r \to 0$; the bisection for that row is relative to that baseline.}
+\label{tab:scan}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccccccc@{}}
+\toprule
+Shell & $C$ & $R_1/R_2$ & sF & $\Delta$ [m] & $\rho_{\max}$ [J\,m$^{-3}$] & $p_{t}/\rho$ & $v^*$ & $v_{\rm wf}$ & $v_B$ / $v_U$ & $v_{\rm NEC}$ \\
+\midrule
+published & 0.333 & 0.50 & 4000 & 7.88 & $1.36\times10^{40}$ & 0.19 & 0.0316 & 0.0361 & 0.052 / 0.149 & 0.0305--0.0316 \\
+lighter & 0.100 & 0.50 & 4000 & 7.88 & $4.07\times10^{39}$ & 0.04 & 0.0098 & 0.0101 & 0.014 / 0.039 & 0.0094--0.0105 \\
+heavier & 0.500 & 0.50 & 4000 & 7.88 & $2.04\times10^{40}$ & 0.39 & 0.0456 & 0.0587 & 0.092 / 0.261 & 0.0422--0.0434 \\
+heaviest & 0.700 & 0.50 & 4000 & 7.88 & $2.85\times10^{40}$ & 1.00 & 0.0601 & 0.0811 & 0.184 / 0.525 & 0.0527--0.0539 \\
+thick wall & 0.333 & 0.25 & 4000 & 10.82 & $1.22\times10^{40}$ & 0.17 & 0.0529 & 0.0619 & 0.087 / 0.220 & 0.0492--0.0504 \\
+thin wall & 0.333 & 0.75 & 4000 & 5.20 & $1.57\times10^{40}$ & 0.17 & 0.0170 & 0.0178 & 0.026 / 0.073 & 0.0164--0.0176 \\
+sharper shift & 0.333 & 0.50 & 2000 & 6.94 & $1.38\times10^{40}$ & 0.34 & 0.0273 & 0.0317 & 0.046 / 0.168 & 0.0258--0.0270 \\
+smoother shift & 0.333 & 0.50 & 8000 & 10.40 & $1.04\times10^{40}$ & 0.15 & 0.0404 & 0.0453 & 0.067 / 0.143 & 0.0387--0.0398 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+First, the first-order threshold tracks the bisection threshold from above in every row. Measured against the midpoint of the bisection interval, the deficit is within the bisection interval at $C = 0.1$ and at $R_1/R_2 = 0.75$, $2\%$ for the published shell, $3\%$ for the two smoothing variants, $6\%$ at $C = 0.5$ and $R_1/R_2 = 0.25$, and $11\%$ at $C = 0.7$. Written as $v_{\rm NEC} \approx v^*(1 - \kappa v^*)$, the second-order coefficient $\kappa$ lies between $0.5$ and $1.9$ and grows with compactness, consistent with a relative correction of order $v^*$.
+
+Second, the scaling $v^* \propto (\rho+p_t)_{\max}\Delta^2$ holds across the rows that change $\Delta$ or the radii. Relative to the published shell, $(\rho_{\max}+p_{t,\max})\Delta^2$ is $0.89$, $1.28$, $1.66$ and $0.49$ for the sharper shift, the smoother shift, the thick wall and the thin wall, while $v^*$ is $0.86$, $1.28$, $1.67$ and $0.54$ of its published value. Compactness at fixed radii scales $v^*$ almost linearly, $v^*/C = 0.098$, $0.095$, $0.091$, $0.086$ at $C = 0.1$, $1/3$, $0.5$, $0.7$; the slow decline is the curvature correction to $J$, which at the minimizing point rises from $1.03$ to $1.71$ over the same range.
+
+Third, the bound holds in every row. The ratio $v_B/v_{\rm NEC}$ (to the bisection midpoint) is $1.4$ at $C = 0.1$, $1.7$ for the published shell, $2.1$ at $C = 0.5$ and $3.5$ at $C = 0.7$, where the static shell no longer satisfies the dominant condition and $p_t = \rho$ inflates $v_B$. The slack at low compactness comes from evaluating $(\rho+p_t)$ at its maximum while the actual minimum of $v_1$ sits where the smoothed density is still rising, and from the $S'/r$ term. The uniform-shell form is looser by a further factor of $2.1$ to $3.6$ and is meant as an order-of-magnitude statement in terms of $C$ and $R_1/R_2$ alone.
+
+\section{Discussion}\label{sec:disc}
+
+\paragraph{What the bound says.} The shift amplitude of a positive-energy warp shell is limited by how much momentum density its wall can carry without violating the null condition, and that is set by its energy density. The scaling $v^* \lesssim 2\pi(\rho+p_t)\Delta^2$ in geometric units, or $2\pi G(\rho+p_t)\Delta^2/c^4$ in SI, turns into $v^* \lesssim \tfrac34 C(1-R_1/R_2)(1+p_t/\rho)$ for a uniform shell. For the published shell $v^*/c = 0.031$; for a shell of the same radii at ten percent compactness it is $0.010$. The authors of \cite{Fuchs2024} suggested that optimizing the density and shift profiles, placing energy density where the momentum flux is highest, could raise the admissible shift considerably. Within this class the bound says what optimization can buy: the profile factor is already within $4\%$ of its optimum for the published smoothing, so the remaining room is in $(\rho+p_t)$ at the point of steepest shift and in $\Delta$, both of which are capped by the compactness and the wall thickness. A shift of order $0.1\,c$ needs a shell with compactness around $0.3$ and a wall half its radius; $0.5\,c$ with such a wall needs compactness above $2/3$, in the regime where the construction's own dominant-condition margin has already closed. The bound alone does not exclude larger amplitudes for thick-walled shells; the measured thresholds of the construction, between $1\%$ and $6\%$ of $c$, sit well below it.
+
+\paragraph{Limitations.} The theorem is first order in $v$; the measured second-order corrections lower the threshold, so first-order values are upper estimates, and they are accurate to a few percent where $v^*$ is a few percent. The bound \eqref{eq:bound} is a weak-field statement; the exact momentum density \eqref{eq:Jexact} shows the curvature correction to be a factor $1.03$ to $1.71$ over the compactness range tried, always in the direction of lowering the threshold, but we have not turned \eqref{eq:Jexact} into a closed-form bound at finite compactness. The class is the shell-plus-shift class of \cite{Fuchs2024} with the shift confined to the wall; a shift that extends into the vacuum exterior, a non-radial profile, or a time-dependent amplitude is outside the theorem as stated, although Remark~1(iv) shows which assumptions carry over. We have not examined whether the metrics studied correspond to any realizable matter model; the critique of \cite{Barzegar2026} on that point, and on the interpretation of the shift as motion, stands independently of the present result, which only bounds the shift amplitude of the metric as written.
+
+\paragraph{Relation to the Nat\'ario-class no-go.} For unit lapse and flat slices the Eulerian energy density of any localized shift integrates to a non-positive total and the null condition fails for every non-trivial shift \cite{SSV2022}. The present class escapes that theorem by adding a positive $\rho^0$ and curved slices, and Theorem~\ref{thm:first} measures exactly how far: the escape lasts while the first-order momentum term stays below the static energy density plus tangential pressure. In the limit $\rho^0 \to 0$ the threshold goes to zero, which reproduces the Nat\'ario-class result at first order in $v$; the theorem of \cite{SSV2022} is non-perturbative and stronger.
+
+\paragraph{General static backgrounds.} Theorem~\ref{thm:first} does not use spherical symmetry (Remark~1(iv)): for any static background $(\alpha^0,\gamma_{ij})$ and any stationary shift $\beta_i = v\,b_i(x)$ with $\gamma_{ij}$ unchanged, the Eulerian energy density and stresses are unchanged at first order, $j_i = vJ_i$ with $8\pi J_i = D_j(\Ks^j{}_i - \delta^j_i\Ks)$, and the same threshold formula \eqref{eq:vstar} applies. Under the dominant condition this is the familiar initial-data inequality $|j| \le \rho_E$ applied to the momentum constraint, so the general statement is not new; what is specific to the present class is the closed form of $J$ and the resulting bound in terms of $\Delta$ and $C$. The same structure appears for rotational frame dragging: inside a slowly rotating shell the interior is dragged rigidly at $\omega_d = 4M\omega/3R$ in the weak field \cite{Thirring1918}, and the momentum density the wall can carry limits the drag in the same way. Applying the slow-rotation formula up to $\omega R \to 1$ would give $\omega_d R \le \tfrac23 C$, but that extrapolation lies outside the formula's range of validity and is quoted only to show the analogy.
+
+\paragraph{Outlook.} Two extensions are natural. A lower bound on $|J_{\hat\theta}|$ from \eqref{eq:Jexact} in terms of $\max|S''|$ and the metric functions would turn the bound into a closed form valid at all compactnesses that the shell itself admits. A second-order analysis would fix the coefficient $\kappa$ and show whether it is sign-definite in general, as it is in every case computed here.
+
+\section{Conclusion}
+
+Adding a radial shift to a static matter shell changes the Eulerian momentum density at first order in the shift amplitude and everything else at second order. The null energy condition therefore fails at a threshold fixed by the ratio of the shell's energy density plus tangential pressure to twice the linearized momentum density, and that momentum density is set by the second derivative of the shift profile through the exact expression \eqref{eq:Jexact}. A unit transition cannot have a second derivative smaller than $4/\Delta^2$, so the threshold obeys $v^* \le 2\pi(\rho+p_t)_{\max}\Delta^2$ in geometric units, which for a uniform shell is $\tfrac34 C(1-R_1/R_2)(1+p_t/\rho)$. The published positive-energy warp shell reaches $0.031\,c$; a scan of eight shells follows the predicted scaling and stays under the bound. The positive-energy warp shells computed here reach shift amplitudes of $1\%$ to $6\%$ of the speed of light, and the bound places relativistic amplitudes at compactnesses where the construction approaches its own dominant-condition and horizon limits.
+
+\section*{Acknowledgments}
+The author thanks [names, if any, to be added after review]. This work used Claude (Anthropic), a large language model, as a research assistant: for literature searches, for symbolic and numerical cross-checks of the derivations, for writing the analysis code, and for drafting the text. The author directed the work, verified the derivations and reran the computations independently, and takes full responsibility for the content.
+
+\section*{Data availability}
+The code that generates every number in this paper (the metric generator, the Einstein-tensor and energy-condition pipeline, the threshold, bound and bisection scripts, and the exact one-dimensional formula) and the raw results are openly available at [GitHub repository URL] and archived at [Zenodo DOI]. The Warp Factory toolkit used for comparison is available at \url{https://github.com/NerdsWithAttitudes/WarpFactory}.
+
+\appendix
+\section{Numerical method and validation}\label{app:num}
+
+Each generator returns the covariant metric on a slab of $N_x\times N_y\times5$ points with spacing $h$ in the comoving frame, where the metric is time-independent so time derivatives vanish. First and second metric derivatives on the central plane use 4th-order central stencils; mixed derivatives compose first-derivative stencils. The Ricci tensor uses the coordinate formula
+\begin{equation}
+R_{\mu\nu} = \tfrac12 g^{\alpha\beta}\left(\partial_\alpha\partial_\nu g_{\mu\beta} + \partial_\mu\partial_\beta g_{\alpha\nu} - \partial_\alpha\partial_\beta g_{\mu\nu} - \partial_\mu\partial_\nu g_{\alpha\beta}\right) + g^{\alpha\beta}g^{\gamma\delta}\left(\Gamma_{\alpha\mu\gamma}\Gamma_{\beta\nu\delta} - \Gamma_{\alpha\mu\nu}\Gamma_{\beta\gamma\delta}\right),
+\end{equation}
+with the first index of $\Gamma$ lowered; the $\Gamma\Gamma$ term was checked symbolically against the Christoffel definition on a generic four-function metric before use. Then $G_{\mu\nu} = R_{\mu\nu} - \tfrac12Rg_{\mu\nu}$ and $T_{\mu\nu} = (c^4/8\pi G)G_{\mu\nu}$ with $c = 299\,792\,458\,\mathrm{m\,s^{-1}}$ and $G = 6.67430\times10^{-11}\,\mathrm{m^3\,kg^{-1}\,s^{-2}}$, the values used by Warp Factory. The Eulerian tetrad is $e_0 = (1/\alpha, -\beta^i/\alpha)$ with spatial legs from the Cholesky factor of $\gamma_{ij}$. The eigenvalue test diagonalizes $T^a{}_b = \eta^{ac}T_{cb}$, identifies the timelike eigenvector where one exists (type I), and reads the conditions off $\rho$ and the three principal pressures.
+
+Validation: every component of $G$ vanishes identically on a Minkowski slab; for Schwarzschild in isotropic coordinates with $r_s = 0.2\,\mathrm{m}$ and $h = 0.1\,\mathrm{m}$ the residual $\max|G|$ at $r > 1\,\mathrm{m}$ is $7.3\times10^{-5}$ against a curvature scale of $0.2$; for the Alcubierre comoving metric with $v = 0.5$, $R = 5\,\mathrm{m}$, $\sigma = 0.5\,\mathrm{m^{-1}}$, $h = 0.1\,\mathrm{m}$ the full $G_{\mu\nu}$ matches an exact sympy Einstein tensor computed through the Christoffel route to $1.5\%$ (finite-difference truncation in the wall), the Eulerian density matches Alcubierre's closed form $-v^2(y^2+z^2)f'^2/32\pi r^2$ to $6.6\times10^{-6}$, and the integrated Eulerian energy matches $-(v^2/12)(c^4/G)\int f'^2r^2\dd r$ to $0.05\%$. For the shell, halving $h$ from $0.2$ to $0.1\,\mathrm{m}$ at $v = 0.2\,c$ leaves the null minimum, its location and the frame tensor there unchanged to three digits.
+
+The shell generator follows \cite{Fuchs2024} and the Warp Factory source: a constant-density profile between $R_1$ and $R_2$ on a radial grid of $10^5$ samples, the constant-density TOV pressure with $P = 0$ for $r < R_1$, four passes of a centred moving average of span $1.79\,\mathrm{sF}$ on the density and $\mathrm{sF}$ on the pressure, the mass function from the smoothed density, $e^{2b} = (1 - 2Gm/rc^2)^{-1}$, $a$ by integrating $\dd a/\dd r = G(m/c^2r^2 + 4\pi r\tilde P/c^4)(1-2Gm/rc^2)^{-1}$ inward from the Schwarzschild value, the compact sigmoid of equations (27) and (28) of \cite{Fuchs2024} smoothed twice with span sF, and the Cartesian metric $\gamma_{ij} = \delta_{ij} + (e^{2b}-1)n_in_j$ with $g_{tx} = -vS$. The published example has $R_1 = 10\,\mathrm{m}$, $R_2 = 20\,\mathrm{m}$, $M = R_2c^2/6G$, $\mathrm{sF} = 4000$, $R_b = 0$, $v = 0.02$. 
+
+\begin{thebibliography}{99}
+\bibitem{Alcubierre1994} M.~Alcubierre, The warp drive: hyper-fast travel within general relativity, Class.\ Quantum Grav.\ \textbf{11}, L73 (1994).
+\bibitem{Natario2002} J.~Nat\'ario, Warp drive with zero expansion, Class.\ Quantum Grav.\ \textbf{19}, 1157 (2002).
+\bibitem{SSV2022} J.~Santiago, S.~Schuster and M.~Visser, Generic warp drives violate the null energy condition, Phys.\ Rev.\ D \textbf{105}, 064038 (2022).
+\bibitem{BobrickMartire2021} A.~Bobrick and G.~Martire, Introducing physical warp drives, Class.\ Quantum Grav.\ \textbf{38}, 105009 (2021).
+\bibitem{Fuchs2024} J.~Fuchs, C.~Helmerich, A.~Bobrick, L.~Sellers, B.~Melcher and G.~Martire, Constant velocity physical warp drive solution, Class.\ Quantum Grav.\ \textbf{41}, 095013 (2024), doi:10.1088/1361-6382/ad26aa; arXiv:2405.02709.
+\bibitem{Helmerich2024} C.~Helmerich, J.~Fuchs, A.~Bobrick, L.~Sellers, B.~Melcher and G.~Martire, Analyzing warp drive spacetimes with Warp Factory, Class.\ Quantum Grav.\ \textbf{41}, 095009 (2024), doi:10.1088/1361-6382/ad2e42; code at \url{https://github.com/NerdsWithAttitudes/WarpFactory}.
+\bibitem{Barzegar2026} H.~Barzegar, T.~Buchert and Q.~Vigneron, General formalism, classification, and demystification of the current warp-drive spacetimes, arXiv:2602.16495 (2026).
+\bibitem{Lentz2021} E.~W.~Lentz, Breaking the warp barrier: hyper-fast solitons in Einstein--Maxwell-plasma theory, Class.\ Quantum Grav.\ \textbf{38}, 075015 (2021).
+\bibitem{FellHeisenberg2021} S.~D.~B.~Fell and L.~Heisenberg, Positive energy warp drive from hidden geometric structures, Class.\ Quantum Grav.\ \textbf{38}, 155020 (2021).
+\bibitem{Baumgarte} T.~W.~Baumgarte and S.~L.~Shapiro, Numerical Relativity: Solving Einstein's Equations on the Computer (Cambridge University Press, 2010).
+\bibitem{Le2026cert} A.~T.~Le, Observer-robust energy condition verification for warp drive spacetimes, arXiv:2602.18023 (2026).
+\bibitem{Le2026shells} A.~T.~Le, On the boundary cost of source-consistent warp shells, arXiv:2605.25417v1 (2026); later versions retitled Relativistic elastic shells: material support and cavity geometry.
+\bibitem{Le2026steer} A.~T.~Le, Steering a warp drive without exotic matter, arXiv:2606.22531 (2026).
+\bibitem{HollowCores2026} Boundary obstructions and lapse freedom in static spherical hollow cores, arXiv:2608.15000 (2026).
+\bibitem{Thirring1918} H.~Thirring, \"Uber die Wirkung rotierender ferner Massen in der Einsteinschen Gravitationstheorie, Phys.\ Z.\ \textbf{19}, 33 (1918); D.~R.~Brill and J.~M.~Cohen, Rotating masses and their effect on inertial frames, Phys.\ Rev.\ \textbf{143}, 1011 (1966).
+\end{thebibliography}
+
+\end{document}
