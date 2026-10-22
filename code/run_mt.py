@@ -1,5 +1,7 @@
+import os
+RESULTS = os.environ.get('FTL_RESULTS', os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'results'))
+os.makedirs(RESULTS, exist_ok=True)
 import numpy as np, sys, json, time
-sys.path.insert(0, '/home/claude/ftl_check')
 import wfcheck as W
 
 def safe_analyse(g3, h, **kw):
@@ -71,4 +73,4 @@ for A in (2.0, 0.5):
                (A, 'as coded in repo (g_tt with f v)' if as_coded else 'Galilean comoving form (g_tt with (1-f) v)'), out, xs, ys)
 
 
-json.dump(results, open('/home/claude/ftl_check/results_mt.json','w'), indent=1)
+json.dump(results, open(RESULTS + '/results_mt.json','w'), indent=1)

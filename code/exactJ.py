@@ -1,9 +1,11 @@
+import os
+RESULTS = os.environ.get('FTL_RESULTS', os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'results'))
+os.makedirs(RESULTS, exist_ok=True)
 """Exact linearized momentum density J for beta_i = -v S(r) delta_i^x on the static background
    ds^2 = -e^{2a} dt^2 + e^{2b} dr^2 + r^2 dOmega^2  (x-axis = polar axis).
    8 pi J_i = D_j (Kt^j_i - delta^j_i Kt),  Kt_ij = (D_i bt_j + D_j bt_i) / (2 e^a),  bt = -S(r) dx.
 """
 import sympy as sp, numpy as np, json, sys
-sys.path.insert(0, '/home/claude/ftl_check')
 
 r, th, ph = sp.symbols('r theta phi', positive=True)
 a = sp.Function('a')(r); b = sp.Function('b')(r); S = sp.Function('S')(r)
@@ -61,7 +63,7 @@ def prep(e):
 fJr = sp.lambdify((r, th, S0, S1, S2, a0, a1, b0, b1), prep(Jrh), 'numpy')
 fJt = sp.lambdify((r, th, S0, S1, S2, a0, a1, b0, b1), prep(Jth_h), 'numpy')
 sp.init_printing()
-with open('/home/claude/ftl_check/exactJ_expressions.txt', 'w') as f:
+with open(RESULTS + '/exactJ_expressions.txt', 'w') as f:
     f.write('J_rhat = ' + sp.latex(prep(Jrh)) + '\n\nJ_thetahat = ' + sp.latex(prep(Jth_h)) + '\n')
     f.write('\nequator (theta=pi/2): J_thetahat = ' + sp.latex(sp.simplify(prep(Jth_h).subs(th, sp.pi/2))) + '\n')
     f.write('equator: J_rhat = ' + sp.latex(sp.simplify(prep(Jrh).subs(th, sp.pi/2))) + '\n')
@@ -111,4 +113,4 @@ for (R1, R2, C, sF) in [(10, 20, 1/3, 4000), (10, 20, 0.10, 4000), (10, 20, 0.50
     o = shell_threshold_1d(R1, R2, C, sF); res.append(o)
     print('C=%.2f R1/R2=%.2f sF=%d: v1D_exact=%.4f at r=%.1f | v_wf=%.4f | axis min %.4f | J/Jwf at min %.3f, median %.3f' % (
         C, R1/R2, sF, o['v_exact_equator'], o['r_min'], o['v_weakfield_equator'], o['v_axis_min'], o['J_exact_over_wf_at_min'], o['J_exact_over_wf_median_wall']))
-json.dump(res, open('/home/claude/ftl_check/exactJ_results.json', 'w'), indent=1)
+json.dump(res, open(RESULTS + '/exactJ_results.json', 'w'), indent=1)

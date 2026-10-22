@@ -1,5 +1,7 @@
+import os
+RESULTS = os.environ.get('FTL_RESULTS', os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'results'))
+os.makedirs(RESULTS, exist_ok=True)
 import numpy as np, sys, json, time
-sys.path.insert(0, '/home/claude/ftl_check')
 import wfcheck as W
 
 def safe_analyse(g3, h, **kw):
@@ -131,5 +133,5 @@ for v, doWarp in ((0.0, False), (0.02, True), (0.2, True), (0.5, True), (0.9, Tr
     report('Warp Shell comoving (Fuchs 2024), R1=10 m, R2=20 m, 2GM/R2c^2=1/3, v=%.2f c, doWarp=%d, smoothFactor=4000, h=0.2 m' % (v, doWarp),
            out, xs, ys, extra=extra)
 
-json.dump(results, open('/home/claude/ftl_check/results.json', 'w'), indent=1)
+json.dump(results, open(RESULTS + '/results.json', 'w'), indent=1)
 print('done in %.0f s' % (time.time() - T0))

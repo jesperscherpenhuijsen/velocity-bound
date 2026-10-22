@@ -1,3 +1,6 @@
+import os
+RESULTS = os.environ.get('FTL_RESULTS', os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'results'))
+os.makedirs(RESULTS, exist_ok=True)
 """Velocity bound for positive-energy warp shells (Fuchs et al. 2024 construction).
 
 For each configuration (R1, R2, compactness C = 2GM/(R2 c^2), smoothFactor):
@@ -10,7 +13,6 @@ For each configuration (R1, R2, compactness C = 2GM/(R2 c^2), smoothFactor):
   6. bisection for the true NEC threshold v_NEC (violation when min NEC < -tol * max|T| in the matter region)
 """
 import numpy as np, sys, json, time
-sys.path.insert(0, '/home/claude/ftl_check')
 import wfcheck as W
 
 H = 0.2
@@ -176,5 +178,5 @@ if __name__ == '__main__':
     allres = []
     for c in configs:
         allres.append(analyse_config(*c))
-        json.dump(allres, open('/home/claude/ftl_check/vbound_results.json', 'w'), indent=1)
+        json.dump(allres, open(RESULTS + '/vbound_results.json', 'w'), indent=1)
     print('ALL DONE')

@@ -1,5 +1,4 @@
 import numpy as np, sympy as sp, time, sys
-sys.path.insert(0, '/home/claude/ftl_check')
 import wfcheck as W
 
 # ---------- 1. Exact Einstein tensor for Alcubierre comoving via Christoffels (sympy) ----------
