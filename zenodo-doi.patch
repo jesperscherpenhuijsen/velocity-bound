@@ -1,0 +1,27 @@
+From 6b12da610a86c50aa9660ce821e061a7eef0544b Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 22 Oct 2026 20:19:27 +0200
+Subject: [PATCH] Add Zenodo DOI to data availability statement
+
+Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01XcV1a3ARztTXhciKDYNZ1Z
+---
+ papers/submission/velocity_bound.tex | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/papers/submission/velocity_bound.tex b/papers/submission/velocity_bound.tex
+index dd5df4e..429f598 100644
+--- a/papers/submission/velocity_bound.tex
++++ b/papers/submission/velocity_bound.tex
+@@ -258,7 +258,7 @@ Adding a radial shift to a static matter shell changes the Eulerian momentum den
+ The author thanks [names, if any, to be added after review]. This work used Claude (Anthropic), a large language model, as a research assistant: for literature searches, for symbolic and numerical cross-checks of the derivations, for writing the analysis code, and for drafting the text. The author directed the work, verified the derivations and reran the computations independently, and takes full responsibility for the content.
+ 
+ \section*{Data availability}
+-The code that generates every number in this paper (the metric generator, the Einstein-tensor and energy-condition pipeline, the threshold, bound and bisection scripts, and the exact one-dimensional formula) and the raw results are openly available at \url{https://github.com/jesperscherpenhuijsen/velocity-bound} and archived at [Zenodo DOI]. The Warp Factory toolkit used for comparison is available at \url{https://github.com/NerdsWithAttitudes/WarpFactory}.
++The code that generates every number in this paper (the metric generator, the Einstein-tensor and energy-condition pipeline, the threshold, bound and bisection scripts, and the exact one-dimensional formula) and the raw results are openly available at \url{https://github.com/jesperscherpenhuijsen/velocity-bound} and archived at \href{https://doi.org/10.5281/zenodo.23574152}{doi:10.5281/zenodo.23574152}. The Warp Factory toolkit used for comparison is available at \url{https://github.com/NerdsWithAttitudes/WarpFactory}.
+ 
+ \appendix
+ \section{Numerical method and validation}\label{app:num}
+-- 
+2.43.0
+
